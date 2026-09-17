@@ -12,3 +12,7 @@ class Aluno extends Model
         'curso',
     ];
 }
+public function curso()
+{
+    return $this->belongsTo(Curso::class);
+}
