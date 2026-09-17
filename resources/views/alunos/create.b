@@ -5,12 +5,24 @@
 @section('content')
     <h1>Cadastrar Aluno</h1>
 
-    @if(true)
-        <p>Preencha os dados do aluno:</p>
-    @endif
+    <form action="{{ route('alunos.store') }}" method="POST">
+        @csrf
 
-    @foreach(['Nome', 'E-mail', 'Curso'] as $campo)
-        <label>{{ $campo }}</label><br>
-        <input type="text"><br><br>
-    @endforeach
+        <label>Nome:</label>
+        <input type="text" name="nome">
+
+        <br><br>
+
+        <label>E-mail:</label>
+        <input type="email" name="email">
+
+        <br><br>
+
+        <label>Curso:</label>
+        <input type="text" name="curso">
+
+        <br><br>
+
+        <button type="submit">Cadastrar</button>
+    </form>
 @endsection
