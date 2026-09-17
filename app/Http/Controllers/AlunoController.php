@@ -2,22 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aluno;
 use Illuminate\Http\Request;
 
 class AlunoController extends Controller
 {
-    //
-}
+    public function index()
+    {
+        $alunos = Aluno::all();
+        return view('alunos.index', compact('alunos'));
+    }
 
-public function consultas()
-{
-    $porCurso = Aluno::where('curso', 'Engenharia de Software')->get();
+    public function show($id)
+    {
+        $aluno = Aluno::findOrFail($id);
+        return view('alunos.show', compact('aluno'));
+    }
 
-    $porNome = Aluno::where('nome', 'like', '%João%')->get();
+    public function create()
+    {
+        return view('alunos.create');
+    }
 
-    $recentes = Aluno::latest()->get();
+    public function store(Request $request)
+    {
+        Aluno::create($request->all());
 
-    $total = Aluno::count();
+        return redirect()->route('alunos.index');
+    }
 
-    return compact('porCurso', 'porNome', 'recentes', 'total');
+    public function edit($id)
+    {
+        $aluno = Aluno::findOrFail($id);
+        return view('alunos.edit', compact('aluno'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $aluno = Aluno::findOrFail($id);
+        $aluno->update($request->all());
+
+        return redirect()->route('alunos.index');
+    }
+
+    public function destroy($id)
+    {
+        $aluno = Aluno::findOrFail($id);
+        $aluno->delete();
+
+        return redirect()->route('alunos.index');
+    }
 }
