@@ -1,31 +1,20 @@
-?php
+<?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/sobre', function () {
-    return 'Página Sobre';
+Route::get('/', function () {
+    return view('welcome');
 });
 
-Route::get('/alunos', function () {
-    return 'Página de Alunos';
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/contato', function () {
-    return 'Página de Contato';
-});
-Route::get('/contato', function () {
-    return 'Página de Contato';
-});
-
-// ATV 2
-Route::get('/produto/{id}', function ($id) {
-    return 'Produto: ' . $id;
-});
-
-Route::get('/categoria/{id}', function ($id) {
-    return 'Categoria: ' . $id;
-});
-
-Route::get('/usuario/{id}', function ($id) {
-    return 'Usuario: ' . $id;
-});
+require __DIR__.'/auth.php';
