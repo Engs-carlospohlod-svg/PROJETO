@@ -4,5 +4,12 @@
 
 @section('content')
     <h1>Lista de Alunos</h1>
-    <p>Bem-vindo à lista de alunos.</p>
+
+    @if(true)
+        <p>Alunos cadastrados:</p>
+    @endif
+
+    @foreach(['João', 'Maria', 'Carlos'] as $aluno)
+        <p>{{ $aluno }}</p>
+    @endforeach
 @endsection
